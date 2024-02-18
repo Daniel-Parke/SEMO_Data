@@ -78,4 +78,35 @@ pip install pandas
 pip install selenium
 pip install webdriver_manager
 ```
+
+## List of reports currently in `report_list.csv`:
+
+|-----------|--------------------------------------------------------|
+| report_id | name                                                   |
+|-----------|--------------------------------------------------------|
+| BM-010    | Daily_Load_Forecast_Summary                            |
+| BM-013    | Four_Day_Aggregated_Wind_Forecast                      |
+| BM-014    | Forecast_Imbalance                                     |
+| BM-016    | Aggregated_Wind_Forecast                               |
+| BM-021    | Anonymised_IncDec_Curve                                |
+| BM-023    | Final_Physical_Notificaiton                            |
+| BM-025    | Imbalance_Price_Report(Imbalance_Pricing_Period)       |
+| BM-026    | Imbalance_Price_Report(Imbalance_Settlement_Period)    |
+| BM-033    | Forecast_Availability                                  |
+| BM-036    | Demand_Control                                         |
+| BM-037    | Daily_Dispatch_Instructions_D+1                        |
+| BM-038    | Daily_Dispatch_Instructions_D+4                        |
+| BM-084    | Trading_Day_Ex_Rate                                    |
+| BM-086    | Daily_Meter_Data                                       |
+| BM-087    | Interconnector_Flows_&_Residual_Capacity               |
+| BM-089    | Average_System_Frequency                               |
+| BM-095    | Balance_&_Imbalance_Market_Cost                        |
+| BM-096    | Dispatch_Quantity                                      |
+| BM-098    | Aggregated_Contracted_Generation_Quantities            |
+| BM-099    | Aggregated_Contracted_Demand_Quantities                |
+| BM-100    | Aggregated_Contracted_Wind_Quantities                  |
+| BM-101    | Average_Outturn_Availability                           |
+| BM-102    | Unit_Under_Test                                        |
+| BM-107    | Generator_Unit_Technical_Characteristics_Transactions  |
+|-----------|--------------------------------------------------------|
 ---
