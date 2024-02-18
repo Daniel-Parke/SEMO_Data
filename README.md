@@ -1,5 +1,7 @@
 # SEMO Report Downloader and Historical Merger
 
+## **CURRENTLY BEING UPDATED TO DEAL WITH PAGINATION ISSUES, WILL HAVE AN ASYNCHRONOUS IMPLEMENTATION SOON**
+
 This Python script automates the process of downloading SEMO reports and merging them with historical datasets available. This script will download all reports as specified in the `report_list.csv` file, and merges them with all downloaded and existing files within the `Downloads` & `Output_Data` folder.
 
 It currently operates by reading the list of reports to be downloaded from the `report_list.csv`, and then utilises Selenium to navigate to the appropriate webpage using google chrome to download this. 
@@ -8,7 +10,9 @@ There are current limitations with addressing table pagination on the SEMO webpa
 
 Instead it only gives you the data visible in the table presented in the HTML on the webpage. To clarify, this is the way their download button works, not the web scraper. I tried to be smart and use the download functionality on their webpage instead of just scraping the HTML, but it would appear that is what the web app does.
 
-This is not that surprising given that I have to make data scraping tools to try and access the grid data easier in the first place. So maybe expecting the download data button to download all the data is too much expectations on my part. If I ever get a few spare hours to bang my ahead against the wall that is accessing SEMO, SONI and Eirgrid data then I may try to fix this, but frankly it is only a matter of time before they change their formats again. 
+This is not that surprising given that I have to make data scraping tools to try and access the grid data easier in the first place. So maybe expecting the download data button to download all the data is me setting my expectations too high. 
+
+Nevertheless, if I ever get a few spare hours to bang my ahead against the wall that is accessing SEMO, SONI and Eirgrid data then I may try to fix this, but for now I will leave the implementation as it is. Frequently (every month or so) running the script should mitigate most of these issues.
 
 TLDR: It would be far easier if SEMO and other institutions actually made what should be public grid data easier to access.
 
