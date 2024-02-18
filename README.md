@@ -39,7 +39,7 @@ The entry point of the script. Orchestrates the workflow by setting up directori
 Prepares the environment for downloading reports:
 - Creates a main download directory within the current script's directory.
 - Generates a versioned subdirectory for the current session's downloads.
-- Downloads reports based on identifiers listed in a CSV file.
+- Downloads reports based on identifiers listed in the `report_list.csv` file.
 
 ### `merge_data(current_directory)`
 Merges CSV files from the download directories into consolidated files:
