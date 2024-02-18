@@ -81,7 +81,6 @@ pip install webdriver_manager
 
 ## List of reports currently in `report_list.csv`:
 
-|-----------|--------------------------------------------------------|
 | report_id | name                                                   |
 |-----------|--------------------------------------------------------|
 | BM-010    | Daily_Load_Forecast_Summary                            |
@@ -108,5 +107,4 @@ pip install webdriver_manager
 | BM-101    | Average_Outturn_Availability                           |
 | BM-102    | Unit_Under_Test                                        |
 | BM-107    | Generator_Unit_Technical_Characteristics_Transactions  |
-|-----------|--------------------------------------------------------|
 ---
