@@ -6,9 +6,10 @@ It currently operates by reading the list of reports to be downloaded from the `
 
 # **How to run:**
 - Ensure `report_list.csv` is located in same folder as the script being run.
-- Remove or add rows to the `report_list.csv` if you need to change the report data being downloaded.
-- Either run the .py script on the terminal, or run the first cell located in the .ipynb notebook to run the program.
+- Run the .py script on the terminal, or run the first cell located in the .ipynb notebook to run the program.
 - Wait approximately 30-60 seconds and then enjoy your new collection of merged data.
+
+- (OPTIONAL) Remove or add rows to the `report_list.csv` if you need to change the report data being downloaded, otherwise just run the script and you should be good to go!
 <br>
 
 ## Script Operation Description:
@@ -17,7 +18,9 @@ To run the script successfully you must have the `report_list.csv` file stored i
 
 Once run, the script will create two folders in the same location called `Downloads` & `Output_Data`. `Downloads` will contain all the raw data downloaded, and will create a new folder and download new files every time the script is run. This is because the SEMO webpage where the reports are downloaded from only go back for the last year. 
 
-The merge data function will then scan every folder within `Downloads` and will merge files with the same name, removing duplicates and sorting the dataset from oldest to newest. These combined files are then saved in the folder `Output_Data` with the same file name as the ones they orginated from. It is done this way so that you can just arbitrarily run the script at infrequent time periods, and the program will sort out merging the new data with what already exists. The program will also consider data that already exists within the `Output_Data` folder, so you can delete the `Downloads` folder to save disk space at any time if you already have some instance of merged `Output_Data`.
+The merge data function will then scan every folder within `Downloads` and will merge files with the same name, removing duplicates and sorting the dataset from oldest to newest. These combined files are then saved in the folder `Output_Data` with the same file name as the ones they orginated from. 
+
+It is done this way so that you can just arbitrarily run the script at infrequent time periods, and the program will sort out merging the new data with what already exists. The program will also consider data that already exists within the `Output_Data` folder, so you can delete the `Downloads` folder to save disk space at any time if you already have some instance of merged `Output_Data`.
 <br>
 
 ## Features
