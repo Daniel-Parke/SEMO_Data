@@ -1,20 +1,6 @@
 # SEMO Report Downloader and Historical Merger
 
-## **CURRENTLY BEING UPDATED TO DEAL WITH PAGINATION ISSUES, WILL HAVE AN ASYNCHRONOUS IMPLEMENTATION SOON**
-
-This Python script automates the process of downloading SEMO reports and merging them with historical datasets available. This script will download all reports as specified in the `report_list.csv` file, and merges them with all downloaded and existing files within the `Downloads` & `Output_Data` folder.
-
-It currently operates by reading the list of reports to be downloaded from the `report_list.csv`, and then utilises Selenium to navigate to the appropriate webpage using google chrome to download this. 
-
-There are current limitations with addressing table pagination on the SEMO webpage. You would think that by clicking to download their dataset it would give you the full dataset, but that would make far too much sense of course. 
-
-Instead it only gives you the data visible in the table presented in the HTML on the webpage. To clarify, this is the way their download button works, not the web scraper. I tried to be smart and use the download functionality on their webpage instead of just scraping the HTML, but it would appear that is what the web app does.
-
-This is not that surprising given that I have to make data scraping tools to try and access the grid data easier in the first place. So maybe expecting the download data button to download all the data is me setting my expectations too high. 
-
-Nevertheless, if I ever get a few spare hours to bang my ahead against the wall that is accessing SEMO, SONI and Eirgrid data then I may try to fix this, but for now I will leave the implementation as it is. Frequently (every month or so) running the script should mitigate most of these issues.
-
-TLDR: It would be far easier if SEMO and other institutions actually made what should be public grid data easier to access.
+This Python script automates the process of downloading SEMO reports and merging them with historical datasets available. This script will download all reports as specified in the `report_list.csv` file, merges where applicable, and then saves the downloaded files to the `Output_Data` folder.
 
 # **How to run:**
 - Ensure `report_list.csv` is located in same folder as the script being run.
@@ -37,41 +23,58 @@ It is done this way so that you can just arbitrarily run the script at infrequen
 
 ## Features
 
-- **Automated Web Scraping**: Downloads reports based on a predefined list in a CSV file using Selenium WebDriver.
-- **Dynamic Directory Management**: Creates versioned and date-stamped directories for organizing downloaded reports.
-- **Data Merging**: Merges CSV files from different download sessions into a single file per report type, removing duplicates and sorting data as required.
-- **Output Organization**: Stores merged data in a designated output directory for easy access and further use.
+- **Asynchronous Data Fetching**: Leverages asyncio for concurrent downloading, making the process faster and more efficient.
+- **Enhanced Error Handling**: Implements retries and backoff strategies to manage request timeouts or failures gracefully.
+- **Automatic URL Generation**: Constructs API URLs dynamically to fetch report data, handling pagination seamlessly from provided `report_list.csv` files.
+- **Data Merging**: Combines downloaded data with existing datasets, ensuring chronological order and removing duplicates.
+
 
 ## Functions Overview
 
-### `main()`
-The entry point of the script. Orchestrates the workflow by setting up directories, initiating the download process, and merging the downloaded data.
+### `async_init()`
+Initializes the downloading process by loading the report list and preparing URLs for asynchronous fetching. This method replaces the manual setup and selenium navigation, streamlining the download process.
 
-### `setup_and_download_reports(current_directory)`
-Prepares the environment for downloading reports:
-- Creates a main download directory within the current script's directory.
-- Generates a versioned subdirectory for the current session's downloads.
-- Downloads reports based on identifiers listed in the `report_list.csv` file.
+- **Load Report List**: Reads `report_list_short.csv` to prepare a list of reports for download.
+- **Generate URLs**: Dynamically constructs URLs for each report, handling pagination through asynchronous requests.
 
-### `merge_data(current_directory)`
-Merges CSV files from the download directories into consolidated files:
-- Identifies and processes CSV files across all download sessions and an output directory.
-- Removes duplicate entries based on specific criteria.
-- Sorts data in each file based on predefined columns.
+### `create_api_url(report_num, page="1", page_size="5000")`
+Generates the URL for a specific report and page, accommodating the SEMO API's requirements for fetching report data.
 
-### `create_main_download_directory(current_directory)`
-Creates a main directory named "Downloads" in the script's current directory, if it doesn't already exist.
+- **Parameters**: Accepts the report number, page, and page size to customize the URL.
+- **Return Value**: Constructs and returns a fully qualified URL string for accessing report data.
 
-### `create_versioned_download_directory(downloads_main_dir)`
-Generates a uniquely named subdirectory within "Downloads" for the current session's files, incorporating the current date and a session number to avoid conflicts.
+### `get_total_pages(url)`
+Determines the total number of pages for a report by making an initial request to the report's URL and parsing the pagination details.
 
-### `download_reports(download_dir, csv_file)`
-Uses Selenium WebDriver to navigate to specified URLs and download reports:
-- Reads a list of report identifiers and additional metadata from a CSV file.
-- Visits each report's URL and downloads the report, handling dynamic web elements as necessary.
+- **Asynchronous Operation**: Uses `httpx` to asynchronously fetch the initial page and extract the total number of pages from the pagination information.
 
-### `wait_and_click(driver, by_method, selector)`
-A utility function to wait for a web element to become clickable and then click it, encapsulating common Selenium WebDriver interactions.
+### `generate_all_urls_async()`
+Asynchronously prepares all URLs needed for downloading the reports, ensuring efficient handling of reports with multiple pages.
+
+- **Concurrent URL Generation**: Utilizes `asyncio` tasks to simultaneously generate URLs for all pages of each report, significantly speeding up the preparation phase.
+
+### `fetch_with_retry(url, url_index, total_urls, report_name)`
+Attempts to download data from a given URL with retries on failure, reducing the impact of network issues or server errors.
+
+- **Retry Logic**: Implements exponential backoff retry logic to handle temporary connectivity issues or server-side rate limiting.
+- **Progress Logging**: Provides detailed logging for each attempt, including success notifications and warnings on retry.
+
+### `fetch_and_merge_data()`
+Coordinates the asynchronous fetching of data for all prepared URLs and merges the results into coherent datasets.
+
+- **Asynchronous Fetching and Merging**: Leverages concurrency to download data from multiple URLs simultaneously, followed by merging the data from different pages into a single dataset per report.
+- **Immediate CSV Saving**: Saves merged data to CSV files in the `Output_Data` directory right after processing each report, ensuring data persistence and easy access.
+
+### `combine_data(pages_data)`
+Combines data from multiple pages of a report into a single dataset.
+
+- **Data Aggregation**: Aggregates items from the JSON responses of each page into a unified list, preparing it for conversion into a DataFrame.
+
+### `save_data_to_csv(df, report_name)`
+Saves the merged data for a report to a CSV file, organizing the output in a structured manner.
+
+- **Output Directory Management**: Checks for the existence of the `Output_Data` directory and creates it if necessary.
+- **CSV File Creation**: Writes the DataFrame to a CSV file named after the report, ensuring data from different reports are easily distinguishable and accessible.
 
 ## Usage
 
@@ -82,16 +85,14 @@ A utility function to wait for a web element to become clickable and then click 
 ## Dependencies
 
 - Python 3
-- Selenium
 - pandas
-- WebDriver Manager for Python
+- httpx
 
 Ensure you have the latest versions of these dependencies installed to avoid any compatibility issues.
 
 ```python
 pip install pandas
-pip install selenium
-pip install webdriver_manager
+pip install httpx
 ```
 
 ## List of reports currently in `report_list.csv`:
