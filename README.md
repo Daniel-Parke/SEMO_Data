@@ -1,6 +1,6 @@
 # SEMO Report Downloader and Historical Merger
 
-This Python script automates the process of downloading SEMO reports and merging them with historical datasets available. This script will download all reports as specified in the `report_list.csv` file, merges where applicable, and then saves the downloaded files to the `Output_Data` folder.
+This Python script automates the process of downloading SEMO reports and merging them with the range of data available through the SEMO API. This script will download all reports as specified in the `report_list.csv` file, merges where applicable, and then saves the downloaded files to the `Output_Data` folder.
 
 There are three scripts to choose from, short, long or full. There are several reports that consist of over 500,000 rows of data so I seperated the reports into short and long types. If you would like to download them all at once, then select the script with `full.py` at the end.
 
@@ -9,9 +9,9 @@ The date range is set to download all data available from 2010 until 2030, so un
 # **How to run:**
 - Ensure that either `report_list_xxxx.csv` are located in the SEMO_Downloader folder.
 - Run the `semo_report_xxxx.py` script on the terminal, or run the first cell located in the .ipynb notebook to run the program. 
-- Wait approximately 30-60 seconds and then enjoy your new collection of merged data.
+- Enjoy your new collection of merged data without the hassle of navigating the website.
 
-- (OPTIONAL) Remove or add rows to the `report_list.csv` if you need to change the report data being downloaded, otherwise just run the script and you should be good to go!
+- (OPTIONAL) Remove or add rows to the `report_list_xxxxx.csv` if you need to change the report data being downloaded, otherwise just run the script you need and you should be good to go!
 <br>
 
 ## Script Operation Description:
