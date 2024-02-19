@@ -2,23 +2,24 @@
 
 This Python script automates the process of downloading SEMO reports and merging them with historical datasets available. This script will download all reports as specified in the `report_list.csv` file, merges where applicable, and then saves the downloaded files to the `Output_Data` folder.
 
+There are three scripts to choose from, short, long or full. There are several reports that consist of over 500,000 rows of data so I seperated the reports into short and long types. If you would like to download them all at once, then select the script with `full.py` at the end.
+
+The date range is set to download all data available from 2010 until 2030, so unless the server API changes this should download all available data offered by SEMO on the frontend.
+
 # **How to run:**
-- Ensure `report_list.csv` is located in same folder as the script being run.
-- Run the .py script on the terminal, or run the first cell located in the .ipynb notebook to run the program.
+- Ensure that either `report_list_xxxx.csv` are located in the SEMO_Downloader folder.
+- Run the `semo_report_xxxx.py` script on the terminal, or run the first cell located in the .ipynb notebook to run the program. 
 - Wait approximately 30-60 seconds and then enjoy your new collection of merged data.
 
 - (OPTIONAL) Remove or add rows to the `report_list.csv` if you need to change the report data being downloaded, otherwise just run the script and you should be good to go!
 <br>
 
 ## Script Operation Description:
+To run the script simply run the `.py` files, or alternatively run the required cell within the jupyer notebook `.ipynb` file. Here each of the scripts is available to run in a seperate cell if this is more familiar for you.
 
-To run the script successfully you must have the `report_list.csv` file stored in the same location as the script being run, whether that is the .py or .ipynb file. 
+Once run the script will generate a class object which compiles a list of all the URLs to be accessed, and then begins asynchronously accessing these. Once a particularly report has been fully downloaded and merged, a .csv file will be produced and saved in the `Output_Data` folder.
 
-Once run, the script will create two folders in the same location called `Downloads` & `Output_Data`. `Downloads` will contain all the raw data downloaded, and will create a new folder and download new files every time the script is run. This is because the SEMO webpage where the reports are downloaded from only go back for the last year. 
-
-The merge data function will then scan every folder within `Downloads` and will merge files with the same name, removing duplicates and sorting the dataset from oldest to newest. These combined files are then saved in the folder `Output_Data` with the same file name as the ones they orginated from. 
-
-It is done this way so that you can just arbitrarily run the script at infrequent time periods, and the program will sort out merging the new data with what already exists. The program will also consider data that already exists within the `Output_Data` folder, so you can delete the `Downloads` folder to save disk space at any time if you already have some instance of merged `Output_Data`.
+Currently the program will download and overwrite any existing files that exist with the same name in the `Output_Data` folder. This shouldn't be an issue as the downloader will try to access the full range of data available anyway. If this is an issue though please let me know and I may update the logic. Alternatively if you rename the `Output_Data` folder to something else before running the script again, this will prevent the issue.
 <br>
 
 ## Features
