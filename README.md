@@ -4,7 +4,7 @@ This Python script automates the process of downloading SEMO reports and merging
 
 There are three scripts to choose from, short, long or full. There are several reports that consist of over 500,000 rows of data so I seperated the reports into short and long types. If you would like to download them all at once, then select the script with `full.py` at the end.
 
-The date range is set to download all data available from 2010 until 2030, so unless the server API changes this should download all available data offered by SEMO on the frontend.
+The date range is set to download all data available from 2010 until 2030, so unless the server API changes this should download all available data offered by SEMO on the frontend. I have included the data that is downloaded if the `_short.py` were to be run, the other datasets were unfortunately too large for github with LFS.
 
 # **How to run:**
 - Ensure that either `report_list_xxxx.csv` are located in the SEMO_Downloader folder.
@@ -77,11 +77,6 @@ Saves the merged data for a report to a CSV file, organizing the output in a str
 - **Output Directory Management**: Checks for the existence of the `Output_Data` directory and creates it if necessary.
 - **CSV File Creation**: Writes the DataFrame to a CSV file named after the report, ensuring data from different reports are easily distinguishable and accessible.
 
-## Usage
-
-1. **Prepare the CSV File**: Ensure `report_list.csv` is in the same directory as the script, with columns for `report_id`, `name`, and `chart?` indicating whether a chart download is required.
-2. **Run the Script**: Execute the script with Python 3. Make sure all dependencies are installed, including Selenium and the necessary WebDriver.
-3. **Check Outputs**: Access downloaded reports in the dynamically created directories within "Downloads". Merged and processed files will be available in the "Output_Data" directory.
 
 ## Dependencies
 
