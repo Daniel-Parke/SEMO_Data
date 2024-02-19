@@ -120,3 +120,5 @@ pip install httpx
 | BM-102    | Unit_Under_Test                                        |
 | BM-107    | Generator_Unit_Technical_Characteristics_Transactions  |
 ---
+
+![WiseWattage](https://i.imgur.com/Y7oMz2Y.png)
